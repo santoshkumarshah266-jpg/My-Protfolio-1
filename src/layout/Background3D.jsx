@@ -16,9 +16,12 @@ const Background3D = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
-    // Configuration
-    const sphereRadius = 250;
-    const particleCount = 100;
+    // Detect mobile
+    const isMobile = window.innerWidth < 768;
+
+    // Configuration - Reduced for mobile
+    const sphereRadius = isMobile ? 150 : 250;
+    const particleCount = isMobile ? 30 : 100;
     const fov = 400;
     const viewDistance = 500;
     let rotationX = 0;
@@ -66,9 +69,9 @@ const Background3D = () => {
       }
     }
 
-    // Generate Sphere Vertices
+    // Generate Sphere Vertices - Fewer points on mobile
     const points = [];
-    const numPoints = 80;
+    const numPoints = isMobile ? 30 : 80;
     const phi = Math.PI * (3 - Math.sqrt(5));
 
     for (let i = 0; i < numPoints; i++) {
@@ -104,11 +107,13 @@ const Background3D = () => {
         ctx.fill();
       });
 
-      // Sphere Interactions & Auto Rotation
-      const targetRotX = (y - window.innerHeight / 2) * 0.05;
-      const targetRotY = (x - window.innerWidth / 2) * 0.05;
-      rotationX += (targetRotX - rotationX) * 0.05;
-      rotationY += (targetRotY - rotationY) * 0.05;
+      // Sphere Interactions & Auto Rotation - Disable mouse interaction on mobile
+      if (!isMobile) {
+        const targetRotX = (y - window.innerHeight / 2) * 0.05;
+        const targetRotY = (x - window.innerWidth / 2) * 0.05;
+        rotationX += (targetRotX - rotationX) * 0.05;
+        rotationY += (targetRotY - rotationY) * 0.05;
+      }
 
       ctx.strokeStyle = 'rgba(188, 19, 254, 0.15)';
       ctx.lineWidth = 1;
@@ -123,18 +128,20 @@ const Background3D = () => {
         }
       });
 
-      // Draw Lines (Mesh)
-      for (let i = 0; i < projectedPoints.length; i++) {
-        for (let j = i + 1; j < projectedPoints.length; j++) {
-          const d = Math.hypot(
-            projectedPoints[i].x - projectedPoints[j].x,
-            projectedPoints[i].y - projectedPoints[j].y
-          );
-          if (d < 50) {
-            ctx.beginPath();
-            ctx.moveTo(projectedPoints[i].x, projectedPoints[i].y);
-            ctx.lineTo(projectedPoints[j].x, projectedPoints[j].y);
-            ctx.stroke();
+      // Draw Lines (Mesh) - Simplified on mobile
+      if (!isMobile) {
+        for (let i = 0; i < projectedPoints.length; i++) {
+          for (let j = i + 1; j < projectedPoints.length; j++) {
+            const d = Math.hypot(
+              projectedPoints[i].x - projectedPoints[j].x,
+              projectedPoints[i].y - projectedPoints[j].y
+            );
+            if (d < 50) {
+              ctx.beginPath();
+              ctx.moveTo(projectedPoints[i].x, projectedPoints[i].y);
+              ctx.lineTo(projectedPoints[j].x, projectedPoints[j].y);
+              ctx.stroke();
+            }
           }
         }
       }

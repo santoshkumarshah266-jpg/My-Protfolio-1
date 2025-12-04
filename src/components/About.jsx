@@ -7,6 +7,7 @@ import GlassCard from './GlassCard';
  * COMPONENT: ABOUT SECTION
  */
 const About = () => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   // Profile image path - place your image in the public folder
   const imageSrc = `${import.meta.env.BASE_URL}profile.jpg`;
 
@@ -21,23 +22,27 @@ const About = () => {
           className="relative flex justify-center"
         >
           <div className="relative w-64 h-64 md:w-96 md:h-96">
-            {/* Animated Background Glow - Multiple Layers */}
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-tr from-cyan-500 via-blue-500 to-purple-600 rounded-full blur-[120px] opacity-30"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360]
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-bl from-purple-500 via-pink-500 to-cyan-500 rounded-full blur-[100px] opacity-20"
-              animate={{ 
-                scale: [1.2, 1, 1.2],
-                rotate: [360, 180, 0]
-              }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            />
+            {/* Animated Background Glow - Simplified on mobile */}
+            {!isMobile && (
+              <>
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-tr from-cyan-500 via-blue-500 to-purple-600 rounded-full blur-[120px] opacity-30"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-bl from-purple-500 via-pink-500 to-cyan-500 rounded-full blur-[100px] opacity-20"
+                  animate={{ 
+                    scale: [1.2, 1, 1.2],
+                    rotate: [360, 180, 0]
+                  }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                />
+              </>
+            )}
 
             {/* Hexagonal Frame Container */}
             <div className="relative w-full h-full group perspective-1000">
@@ -97,35 +102,39 @@ const About = () => {
                 <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Glitch Effect Overlay */}
-                <motion.div
-                  className="absolute inset-0 mix-blend-screen opacity-0 group-hover:opacity-20"
-                  animate={{
-                    x: [0, -5, 5, -5, 0],
-                  }}
-                  transition={{ duration: 0.3, repeat: Infinity, repeatDelay: 3 }}
-                  style={{
-                    backgroundImage: `url(${imageSrc})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    filter: 'hue-rotate(180deg)',
-                  }}
-                />
+                {/* Glitch Effect Overlay - Desktop only */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute inset-0 mix-blend-screen opacity-0 group-hover:opacity-20"
+                    animate={{
+                      x: [0, -5, 5, -5, 0],
+                    }}
+                    transition={{ duration: 0.3, repeat: Infinity, repeatDelay: 3 }}
+                    style={{
+                      backgroundImage: `url(${imageSrc})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      filter: 'hue-rotate(180deg)',
+                    }}
+                  />
+                )}
               </div>
 
-              {/* Outer Glow Ring */}
-              <motion.div
-                className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: 'linear-gradient(45deg, #00f3ff, #bc13fe, #0066ff, #00f3ff)',
-                  backgroundSize: '300% 300%',
-                  filter: 'blur(20px)',
-                }}
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              />
+              {/* Outer Glow Ring - Desktop only */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(45deg, #00f3ff, #bc13fe, #0066ff, #00f3ff)',
+                    backgroundSize: '300% 300%',
+                    filter: 'blur(20px)',
+                  }}
+                  animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                />
+              )}
             </div>
 
             {/* Floating Tech Icons with Enhanced Animation */}

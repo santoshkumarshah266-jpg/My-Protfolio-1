@@ -6,8 +6,9 @@ import { ChevronDown } from 'lucide-react';
  * COMPONENT: HERO SECTION
  */
 const Hero = () => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 200]);
+  const y = useTransform(scrollY, [0, 500], [0, isMobile ? 0 : 200]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   return (

@@ -14,21 +14,15 @@ const Loader = ({ onLoadingComplete }) => {
       transition={{ delay: 3.5, duration: 1, ease: "easeInOut" }}
       onAnimationComplete={onLoadingComplete}
     >
-      {/* Glowing Orb */}
+      {/* Glowing Orb - Simplified animation */}
       <motion.div 
         className="w-32 h-32 rounded-full bg-black border-2 border-cyan-500 shadow-[0_0_50px_rgba(0,243,255,0.4)] relative mb-12"
         animate={{ 
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-          boxShadow: [
-            "0 0 50px rgba(0,243,255,0.4)", 
-            "0 0 100px rgba(188,19,254,0.6)", 
-            "0 0 50px rgba(0,243,255,0.4)"
-          ]
+          rotate: [0, 360]
         }}
         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
       >
-        <div className="absolute inset-0 rounded-full border border-purple-500/50 scale-75 blur-sm" />
+        <div className="absolute inset-0 rounded-full border border-purple-500/50 scale-75" />
       </motion.div>
 
       {/* Text Reveal */}
