@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 // Layout & Utility
-import CustomCursor from './layout/CustomCursor';
 import Background3D from './layout/Background3D';
 import Loader from './layout/Loader';
 
@@ -22,7 +21,6 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 font-sans">
-      <CustomCursor />
 
       {/* Loading Sequence */}
       {loading && <Loader onLoadingComplete={() => setLoading(false)} />}
